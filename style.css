@@ -11,6 +11,7 @@
     background-image: url(./img/fundo.jpg);
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .titulo{
@@ -174,5 +175,15 @@ i.fas.fa-plus{
     font-family: 'Sofia Sans Condensed', sans-serif;
     filter:opacity(80%);
     border-radius: 0px 0px 5px 5px;
+}
+
+@media (max-width: 600px) {
+    .tarefa {
+        width: 350px;
+    }
+
+    .titulo {
+        font-size: 20pt;
+    }
 }
 
