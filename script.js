@@ -2,18 +2,19 @@ let input = document.querySelector("#caixa_de_pesquisa");
 
 let botaoAdd = document.querySelector(".botao");
 
-let c1 = 0;
+
 
 botaoAdd.addEventListener("click", function(){
     if(input.value != ""){
-        if(c1 == 0){
+        let c1 = document.getElementsByTagName('div');
+        console.log(c1);
+        if(c1.length <= 7){
             let subTitle = document.createElement("div");
             subTitle.classList = "titulo";
             subTitle.style.cssText = "font-size: 15pt; padding-bottom: 10px;"
 
             subTitle.textContent = "Suas tarefas";
-            document.body.appendChild(subTitle);
-            c1=1;
+            document.body.insertBefore(subTitle, document.getElementsByTagName('div')[4]);
         }
         let tarefa = document.createElement("div");
 
@@ -64,4 +65,3 @@ function remove(botao){
             sub.remove();
         }
 }
-
