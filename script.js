@@ -1,13 +1,31 @@
 let input = document.querySelector("#caixa_de_pesquisa");
 
-let botaoAdd = document.querySelector(".botao");
+let chaves = 0;
+
+window.onload = (Event) => {
+    for(let i = 0; localStorage.getItem(i) != null; i++){
+        console.log(localStorage.getItem(i));
+        const conteudo = localStorage.getItem(i).substring(0, localStorage.getItem(i).indexOf('¬'));
+        console.log(conteudo + "   toma");
+        if((localStorage.getItem(i).substring(localStorage.getItem(i).indexOf('¬')+1, localStorage.getItem(i).indexOf('¬')+2)) == 'p'){
+            cria(conteudo);
+        }
+        else if((localStorage.getItem(i).substring(localStorage.getItem(i).indexOf('¬')+1, localStorage.getItem(i).indexOf('¬')+2)) == 'c'){
+            seleção(cria(conteudo).childNodes[2]);
+        }
+    }
+};
+
+window.onkeydown = (Event) =>{
+    if(Event.key == "Enter"){
+        cria(input.value);
+    }
+}
 
 
-
-botaoAdd.addEventListener("click", function(){
-    if(input.value != ""){
+function cria(value){
+    if(value != ""){
         let c1 = document.getElementsByTagName('div');
-        console.log(c1);
         if(c1.length <= 7){
             let subTitle = document.createElement("div");
             subTitle.classList = "titulo";
@@ -19,10 +37,13 @@ botaoAdd.addEventListener("click", function(){
         let tarefa = document.createElement("div");
 
         tarefa.classList = "tarefa";
+        tarefa.setAttribute("data-ordem", chaves);
+        tarefa.setAttribute("data-status", 'p');
+        chaves++;
 
         let valor = document.createElement("div");
         valor.classList = "txt";
-        valor.textContent = input.value;
+        valor.textContent = value;
 
         let botaoCheckIn = document.createElement("button");
         botaoCheckIn.classList = "botao-check";
@@ -48,20 +69,41 @@ botaoAdd.addEventListener("click", function(){
         
 
         document.body.appendChild(tarefa);
+        localStorage.setItem(tarefa.dataset.ordem, tarefa.childNodes[0].textContent + '¬' + tarefa.dataset.status);
         document.querySelector("#caixa_de_pesquisa").value='';
 
+        return tarefa;
     }
-});
+}
+
+function remove(botao){
+        chaves--;
+        localStorage.removeItem(botao.parentNode.dataset.ordem);
+        botao.parentNode.remove();
+
+        for(let i = 0; i < chaves; i++){
+            let list = document.querySelectorAll(".tarefa");
+            list[i].dataset.ordem = i;
+        }
+        
+        localStorage.clear();
+
+        for(let i = 0; i < chaves; i++){
+            let list = document.querySelectorAll(".tarefa");
+            localStorage.setItem(list[i].dataset.ordem, list[i].childNodes[0].textContent + '¬' + list[i].dataset.status);
+        }
+
+        for(let x= document.getElementsByTagName('div'); x.length == 5;){
+            let sub = document.getElementsByClassName('titulo')[1];
+            sub.remove();
+        }
+}
 
 function seleção(botao){
         botao.parentNode.childNodes[0].classList.toggle('txt-toggle');
         botao.parentNode.childNodes[3].style = "background-color: green;"
         botao.parentNode.childNodes[3].textContent = "Concluída!"
-}
-function remove(botao){
-        botao.parentNode.remove();
-        for(let x= document.getElementsByTagName('div'); x.length == 5;){
-            let sub = document.getElementsByClassName('titulo')[1];
-            sub.remove();
-        }
+        botao.parentNode.dataset.status = 'c';
+
+        localStorage.setItem(botao.parentNode.dataset.ordem, botao.parentNode.childNodes[0].textContent + '¬' + botao.parentNode.dataset.status)
 }
