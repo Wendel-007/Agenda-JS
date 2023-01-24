@@ -8,10 +8,8 @@
     bottom: -1vh;
     left: -1vw;
     right: -1vw;
-    background-image: url(./img/fundo.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
 .titulo{
