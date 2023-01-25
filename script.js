@@ -29,7 +29,7 @@ function cria(value){
         if(c1.length <= 7){
             let subTitle = document.createElement("div");
             subTitle.classList = "titulo";
-            subTitle.style.cssText = "font-size: 15pt; padding-bottom: 10px;"
+            subTitle.style.cssText = "font-size: 25pt;"
 
             subTitle.textContent = "Suas tarefas";
             document.body.insertBefore(subTitle, document.getElementsByTagName('div')[4]);
@@ -100,10 +100,19 @@ function remove(botao){
 }
 
 function seleção(botao){
+    let ordem = botao.parentNode.dataset.ordem;
+     if((localStorage.getItem(ordem).substring(localStorage.getItem(ordem).indexOf('¬')+1, localStorage.getItem(ordem).indexOf('¬')+2)) == 'p'){
         botao.parentNode.childNodes[0].classList.toggle('txt-toggle');
         botao.parentNode.childNodes[3].style = "background-color: green;"
         botao.parentNode.childNodes[3].textContent = "Concluída!"
         botao.parentNode.dataset.status = 'c';
-
         localStorage.setItem(botao.parentNode.dataset.ordem, botao.parentNode.childNodes[0].textContent + '¬' + botao.parentNode.dataset.status)
+    }
+    else if((localStorage.getItem(ordem).substring(localStorage.getItem(ordem).indexOf('¬')+1, localStorage.getItem(ordem).indexOf('¬')+2)) == 'c'){
+        botao.parentNode.childNodes[0].classList.toggle('txt-toggle');
+        botao.parentNode.childNodes[3].style = "background-color: rgb(255, 223, 79);"
+        botao.parentNode.childNodes[3].textContent = "Pendente"
+        botao.parentNode.dataset.status = 'p';
+        localStorage.setItem(botao.parentNode.dataset.ordem, botao.parentNode.childNodes[0].textContent + '¬' + botao.parentNode.dataset.status)
+    } 
 }
